@@ -27,7 +27,7 @@ export const sendInvite = async(req,res)=>{
         }
 
       })
-      const inviteLink = `http://localhost:5173/accept-invite?token=${token}`;
+      const inviteLink = `${process.env.FRONTEND_URL}/accept-invite?token=${token}`;
       const mailOptions = {
             from: 'your-email@gmail.com',
             to: email,

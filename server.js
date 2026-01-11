@@ -14,7 +14,8 @@ import express from  'express';
 const app = express();
 
 app.use(cors({
-  origin: 'https://myfrontend-phi.vercel.app/',
+  origin: ['http://localhost:5173',
+  'process.env.FRONTEND_URL'],
   credentials: true
 }));
 

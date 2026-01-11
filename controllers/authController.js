@@ -84,7 +84,7 @@ export const githubCallback = async (req, res) => {
         const isSetupDone = user.monitoredRepos && user.monitoredRepos.length > 0;
         const shouldSkipOnboarding = (user.role === 'ProjectManager' || user.role === 'TeamLead');
 
-        const frontendRedirectUrl = `http://localhost:5173/auth-success?token=${token}&userId=${user._id}&setupDone=${isSetupDone || shouldSkipOnboarding}&role=${user.role}`;
+        const frontendRedirectUrl = `${process.env.FRONTEND_URL}/auth-success?token=${token}&userId=${user._id}&setupDone=${isSetupDone || shouldSkipOnboarding}&role=${user.role}`;
         res.redirect(frontendRedirectUrl);
 
     } catch (error) {

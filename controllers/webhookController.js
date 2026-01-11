@@ -34,7 +34,7 @@ export const handleGithubWebhook = async (req, res) => {
                     prSize: pull_request.additions + pull_request.deletions,
                     status: 'opened'
                 })
-                 console.log(`✅ DB Saved: PR #${pull_request.number} in ${repoName}`);
+                 console.log(` DB Saved: PR #${pull_request.number} in ${repoName}`);
                 console.log(`Title: ${pull_request.title} | Size: ${prSize}`);
             }
 
