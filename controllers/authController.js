@@ -6,7 +6,7 @@ export const githubLogin = (req,res)=>
 {
    const scopes = 'read:user user:email admin:org read:org repo';
    const inviteToken = req.query.token || "";
-   const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&scope=${scopes}&state=${inviteToken}`;
+   const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_CALLBACK_URL}&scope=${scopes}&state=${inviteToken}`;
    res.redirect(githubAuthUrl);
 }
 export const githubCallback = async (req, res) => {
