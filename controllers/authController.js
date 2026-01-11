@@ -102,8 +102,8 @@ export const getUser = async(req,res)=>{
      res.status(404).json({message:"user not found"})
    }
          const userData = user.toObject();
-        userData.avatar_url = `https://github.com/${user.username}.png`;
-   res.status(200).json(userData);
+         userData.avatar_url = `https://github.com/${user.username}.png`;
+         res.status(200).json(userData);
 }catch(err)
 {
     res.status(500).json({message:"Server error",err:err.message})
