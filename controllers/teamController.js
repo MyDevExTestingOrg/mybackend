@@ -80,7 +80,7 @@ export const teamleadstatus = async (req, res) => {
         const teamLeads = await Invitation.find({ 
             invitedBy: managerId, 
             role: 'TeamLead',
-            status: 'accepted' // Sirf unhe dikhayein jinhone join kar liya hai
+            status: 'accepted' 
         }).select('email role teamName assignedRepos invitedBy');
 
         const activityData = await Promise.all(teamLeads.map(async (lead) => {

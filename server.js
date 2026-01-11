@@ -14,12 +14,15 @@ import express from  'express';
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    process.env.FRONTEND_URL     
+  ],
   credentials: true
 }));
 
 app.use(express.json());
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3000
 ConnectDb();
 
 app.use('/api/v1/auth', authRoutes);

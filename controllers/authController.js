@@ -6,7 +6,7 @@ export const githubLogin = (req,res)=>
 {
    const scopes = 'read:user user:email admin:org read:org repo';
    const inviteToken = req.query.token || "";
-   const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&scope=${scopes}&state=${inviteToken}`;
+   const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${process.env.GITHUB_CALLBACK_URL}&scope=${scopes}&state=${inviteToken}`;
    res.redirect(githubAuthUrl);
 }
 export const githubCallback = async (req, res) => {
@@ -84,7 +84,7 @@ export const githubCallback = async (req, res) => {
         const isSetupDone = user.monitoredRepos && user.monitoredRepos.length > 0;
         const shouldSkipOnboarding = (user.role === 'ProjectManager' || user.role === 'TeamLead');
 
-        const frontendRedirectUrl = `http://localhost:5173/auth-success?token=${token}&userId=${user._id}&setupDone=${isSetupDone || shouldSkipOnboarding}&role=${user.role}`;
+        const frontendRedirectUrl = `${process.env.FRONTEND_URL}/auth-success?token=${token}&userId=${user._id}&setupDone=${isSetupDone || shouldSkipOnboarding}&role=${user.role}`;
         res.redirect(frontendRedirectUrl);
 
     } catch (error) {
@@ -102,8 +102,8 @@ export const getUser = async(req,res)=>{
      res.status(404).json({message:"user not found"})
    }
          const userData = user.toObject();
-        userData.avatar_url = `https://github.com/${user.username}.png`;
-   res.status(200).json(userData);
+         userData.avatar_url = `https://github.com/${user.username}.png`;
+         res.status(200).json(userData);
 }catch(err)
 {
     res.status(500).json({message:"Server error",err:err.message})

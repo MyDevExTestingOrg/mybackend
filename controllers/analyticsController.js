@@ -71,7 +71,6 @@ export const getCTOMetrics = async (req, res) => {
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        // CTO के लिए monitoredRepos और Manager के लिए assignedRepos स्कोप
         let reposToTrack = user.role === 'CTO' ? (user.monitoredRepos || []) : (user.assignedRepos || []);
 
         let matchStage = { 
@@ -79,7 +78,6 @@ export const getCTOMetrics = async (req, res) => {
             status: 'merged' 
         };
 
-        // Project filter logic
         if (project && project !== 'null') {
             matchStage.repoFullName = { $regex: new RegExp(`^${project}/`, 'i') };
         }
@@ -113,16 +111,13 @@ export const getCTOMetrics = async (req, res) => {
             }
         ]);
 
-        // डेटा एक्सट्रैक्शन
         const overall = metrics[0].overall[0] || { avgCycleTime: 0, avgPrSize: 0, totalMerged: 0 };
 
         res.status(200).json({
-            // 🚨 Fix: Hours और Minutes दोनों भेजें ताकि ग्राफ से मैच हो सके
             avgCycleTime: {
                 hrs: (overall.avgCycleTime / 60).toFixed(1) + "h",
                 mins: Math.round(overall.avgCycleTime) + "m"
             },
-            // 🚨 Fix: overall से सीधे avgPrSize लें
             avgPrSize: Math.round(overall.avgPrSize) || 0,
             totalMerged: overall.totalMerged || 0,
             orgWiseData: metrics[0].orgWiseData || [],
