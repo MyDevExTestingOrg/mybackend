@@ -18,7 +18,7 @@ export const githubCallback = async (req, res) => {
     if (!code) return res.status(400).send("Authentication code not found");
 
     try {
-        const tokenExchangeResponse = await axios.post("https://github.com/login/oauth/access_token", {
+            const tokenExchangeResponse = await axios.post("https://github.com/login/oauth/access_token", {
             client_id: process.env.GITHUB_CLIENT_ID,
             client_secret: process.env.GITHUB_CLIENT_SECRET,
             code: code,
